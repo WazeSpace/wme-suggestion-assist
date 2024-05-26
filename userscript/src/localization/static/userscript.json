@@ -1,0 +1,10 @@
+{
+  "sa": {
+    "issues_tracker": {
+      "labels": {
+        "mark_claimed": "Mark as claimed",
+        "mark_unclaimed": "Mark as unclaimed"
+      }
+    }
+  }
+}
