@@ -20,6 +20,7 @@ export default async function bootstrap() {
 
   const translations = await getRemoteTranslations();
 
+  // eslint-disable-next-line react/no-deprecated
   ReactDOM.render(
     <App translations={translations} />,
     document.createElement('div'),

@@ -10,7 +10,9 @@ interface AppProps {
 }
 export function App(props: AppProps): ReactElement {
   const currentLocale = getWazeMapEditorWindow().I18n.currentLocale();
-  useInjectTranslations(props.translations ?? { [currentLocale]: staticUserscriptTranslations });
+  useInjectTranslations(
+    props.translations ?? { [currentLocale]: staticUserscriptTranslations },
+  );
 
-  return <EditSuggestionPanelEnhancer />
+  return <EditSuggestionPanelEnhancer />;
 }

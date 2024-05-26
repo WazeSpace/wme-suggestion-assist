@@ -22,4 +22,4 @@ export default function settle(resolve, reject, response) {
       ),
     );
   }
-};
+}

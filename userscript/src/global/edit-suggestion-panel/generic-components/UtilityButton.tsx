@@ -7,7 +7,11 @@ interface UtilityButtonProps {
   label: string;
   onClick(event: SyntheticEvent): void;
 }
-export function UtilityButton({ iconName, label, onClick }: UtilityButtonProps) {
+export function UtilityButton({
+  iconName,
+  label,
+  onClick,
+}: UtilityButtonProps) {
   return (
     <wz-basic-tooltip>
       <wz-tooltip-source>
@@ -18,5 +22,5 @@ export function UtilityButton({ iconName, label, onClick }: UtilityButtonProps) 
       <wz-tooltip-target></wz-tooltip-target>
       <wz-tooltip-content position="top">{label}</wz-tooltip-content>
     </wz-basic-tooltip>
-  )
+  );
 }

@@ -26,6 +26,6 @@ export function useMutationObserver(
 
     return () => {
       disconnectTarget();
-    }
+    };
   }, [memoizedCallback, disconnectTarget, observeTarget]);
 }

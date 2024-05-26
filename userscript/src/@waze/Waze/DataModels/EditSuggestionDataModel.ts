@@ -1,4 +1,7 @@
-import { DataModel, DataModelAttributes } from '@/@waze/Waze/DataModels/DataModel';
+import {
+  DataModel,
+  DataModelAttributes,
+} from '@/@waze/Waze/DataModels/DataModel';
 import { Geometry } from '@turf/helpers';
 
 export interface EditSuggestionTransaction {
@@ -26,7 +29,8 @@ export interface EditSuggestionDataModelAttributes extends DataModelAttributes {
   suggestions: Array<EditSuggestionTransaction>;
 }
 
-export interface EditSuggestionDataModel extends DataModel<EditSuggestionDataModelAttributes> {
+export interface EditSuggestionDataModel
+  extends DataModel<EditSuggestionDataModelAttributes> {
   getCreatedOn(): number;
   getIsRead(): boolean;
   getIsStarred(): boolean;

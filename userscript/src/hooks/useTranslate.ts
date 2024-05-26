@@ -6,6 +6,7 @@ export function useTranslate(prefix?: string) {
     if (prefix) return `${prefix}.${key}`;
     return key;
   };
-  const translate = (key: string, ...args) => I18n.t(constructFullKey(key), ...args);
+  const translate = (key: string, ...args) =>
+    I18n.t(constructFullKey(key), ...args);
   return translate;
 }

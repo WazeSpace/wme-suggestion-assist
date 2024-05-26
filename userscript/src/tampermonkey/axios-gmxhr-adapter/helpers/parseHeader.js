@@ -19,7 +19,9 @@ export default function parseHeaders(headers) {
   var val;
   var i;
 
-  if (!headers) { return parsed; }
+  if (!headers) {
+    return parsed;
+  }
 
   utils.forEach(headers.split('\n'), function parser(line) {
     i = line.indexOf(':');
@@ -32,4 +34,4 @@ export default function parseHeaders(headers) {
   });
 
   return parsed;
-};
+}

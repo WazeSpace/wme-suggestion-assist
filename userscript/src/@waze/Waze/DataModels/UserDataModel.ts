@@ -17,7 +17,6 @@ export interface UserManagedArea {
   name: string;
 }
 
-
 /*
  * `email`: Represents the primary email address associated with the user's account.
  * This attribute is defined by Waze and is essential for replicating user data accurately.
