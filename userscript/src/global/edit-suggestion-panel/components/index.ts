@@ -1,1 +1,1 @@
-export { MarkAsClaimedUtilityButton } from './MarkAsClaimedUtilityButton';
+export { MarkAsHandledUtilityButton } from './MarkAsHandledUtilityButton';

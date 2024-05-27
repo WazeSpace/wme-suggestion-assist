@@ -12,23 +12,23 @@ import { createContext, ReactNode, useCallback, useMemo } from 'react';
 
 interface ClaimEditSuggestion {
   editSuggestionId: number;
-  claimedBy: number;
-  claimedOn: number;
+  handledBy: number;
+  handledOn: number;
   associatedMapComment: MapCommentDataModel;
 }
-interface ClaimedEditSuggestionsContextData {
-  claimedSuggestions: ClaimEditSuggestion[];
+interface HandledEditSuggestionsContextData {
+  handledSuggestions: ClaimEditSuggestion[];
   claimSuggestion(editSuggestion: EditSuggestionDataModel): Promise<boolean>;
 }
-const ClaimedEditSuggestionsContext =
-  createContext<ClaimedEditSuggestionsContextData | null>(null);
+const HandledEditSuggestionsContext =
+  createContext<HandledEditSuggestionsContextData | null>(null);
 
-interface ClaimedEditSuggestionsProviderProps {
+interface HandledEditSuggestionsProviderProps {
   children: ReactNode;
 }
-export function ClaimedEditSuggestionsProvider({
+export function HandledEditSuggestionsProvider({
   children,
-}: ClaimedEditSuggestionsProviderProps) {
+}: HandledEditSuggestionsProviderProps) {
   const matchingMapComments = useMatchingMapComments(
     (mapComment) => {
       return isMapCommentSubjectMatches(mapComment);
@@ -36,18 +36,18 @@ export function ClaimedEditSuggestionsProvider({
     { removeFromEditor: true, processExistingComments: true },
   );
 
-  const claimedEditSuggestions = useMemo(() => {
+  const handledEditSuggestions = useMemo(() => {
     const claims: ClaimEditSuggestion[] = [];
     for (const matchingMapComment of matchingMapComments) {
       const extractedData = extractSuggestionFromMapComment(matchingMapComment);
       if (!extractedData) continue;
       claims.push({
         editSuggestionId: extractedData.editSuggestion,
-        claimedBy:
-          extractedData.claimedBy ??
+        handledBy:
+          extractedData.handledBy ??
           matchingMapComment.getAttribute('createdBy'),
-        claimedOn:
-          extractedData.claimedOn ??
+        handledOn:
+          extractedData.handledOn ??
           matchingMapComment.getAttribute('createdOn'),
         associatedMapComment: matchingMapComment,
       });
@@ -83,44 +83,44 @@ export function ClaimedEditSuggestionsProvider({
   );
 
   return (
-    <ClaimedEditSuggestionsContext.Provider
+    <HandledEditSuggestionsContext.Provider
       value={{
-        claimedSuggestions: claimedEditSuggestions,
+        handledSuggestions: handledEditSuggestions,
         claimSuggestion: claimEditSuggestion,
       }}
     >
       {children}
-    </ClaimedEditSuggestionsContext.Provider>
+    </HandledEditSuggestionsContext.Provider>
   );
 }
 
-export const useClaimedEditSuggestionsContext = createMandatoryUseContext(
-  ClaimedEditSuggestionsContext,
-  'ClaimedEditSuggestionsContext',
+export const useHandledEditSuggestionsContext = createMandatoryUseContext(
+  HandledEditSuggestionsContext,
+  'HandledEditSuggestionsContext',
 );
 
 export function useEditSuggestionClaim(suggestion: EditSuggestionDataModel) {
-  const { claimSuggestion, claimedSuggestions } =
-    useClaimedEditSuggestionsContext();
+  const { claimSuggestion, handledSuggestions } =
+    useHandledEditSuggestionsContext();
   const currentSuggestionClaims = useMemo(() => {
     const currentSuggestionId = suggestion.getAttribute('id');
-    return claimedSuggestions.filter(
+    return handledSuggestions.filter(
       (claim) => claim.editSuggestionId === currentSuggestionId,
     );
-  }, [claimedSuggestions, suggestion]);
+  }, [handledSuggestions, suggestion]);
 
   return {
-    isClaimed: currentSuggestionClaims.length > 0,
-    isClaimedByCurrentUser: currentSuggestionClaims.some(
+    isHandled: currentSuggestionClaims.length > 0,
+    isHandledByCurrentUser: currentSuggestionClaims.some(
       (claim) =>
-        claim.claimedBy ===
+        claim.handledBy ===
         getWazeMapEditorWindow().W.loginManager.user.getAttribute('id'),
     ),
-    claimedBy: claimedSuggestions.map((claim) => claim.claimedBy),
-    claimedOn: Math.max(...claimedSuggestions.map((claim) => claim.claimedOn)),
+    handledBy: handledSuggestions.map((claim) => claim.handledBy),
+    handledOn: Math.max(...handledSuggestions.map((claim) => claim.handledOn)),
     claim: () => claimSuggestion(suggestion),
     async unClaim() {
-      const mapCommentsToDelete = claimedSuggestions.map(
+      const mapCommentsToDelete = handledSuggestions.map(
         (claim) => claim.associatedMapComment,
       );
       const deleteMapCommentActions = mapCommentsToDelete.map(

@@ -1,4 +1,4 @@
-import { MarkAsClaimedUtilityButton } from './components';
+import { MarkAsHandledUtilityButton } from './components';
 import { useShownEditSuggestion } from './hooks';
 import { UtilityButtonsRowPortal } from './portals';
 import { ReactElement } from 'react';
@@ -11,7 +11,7 @@ export function EditSuggestionPanelEnhancer(): ReactElement {
   return (
     <>
       <UtilityButtonsRowPortal>
-        <MarkAsClaimedUtilityButton editSuggestion={editSuggestion} />
+        <MarkAsHandledUtilityButton editSuggestion={editSuggestion} />
       </UtilityButtonsRowPortal>
     </>
   );

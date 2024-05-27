@@ -2,8 +2,8 @@
   "sa": {
     "issues_tracker": {
       "labels": {
-        "mark_claimed": "Mark as claimed",
-        "mark_unclaimed": "Mark as unclaimed"
+        "mark_handled": "Mark as handled",
+        "mark_unhandled": "Mark as unhandled"
       }
     }
   }

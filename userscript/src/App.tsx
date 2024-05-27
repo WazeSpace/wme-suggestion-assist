@@ -1,5 +1,5 @@
 import { EditSuggestionPanelEnhancer } from '@/global';
-import { ClaimedEditSuggestionsProvider } from '@/global/contexts';
+import { HandledEditSuggestionsProvider } from '@/global/contexts';
 import { useInjectTranslations } from '@/hooks';
 import { LanguageTranslations } from '@/@waze/I18n';
 import { getWazeMapEditorWindow } from '@/utils';
@@ -16,8 +16,8 @@ export function App(props: AppProps): ReactElement {
   );
 
   return (
-    <ClaimedEditSuggestionsProvider>
+    <HandledEditSuggestionsProvider>
       <EditSuggestionPanelEnhancer />
-    </ClaimedEditSuggestionsProvider>
+    </HandledEditSuggestionsProvider>
   );
 }

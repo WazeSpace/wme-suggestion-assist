@@ -1,4 +1,4 @@
 export {
-  ClaimedEditSuggestionsProvider,
-  useClaimedEditSuggestionsContext,
-} from './ClaimedEditSuggestionsContext';
+  HandledEditSuggestionsProvider,
+  useHandledEditSuggestionsContext,
+} from './HandledEditSuggestionsContext';
