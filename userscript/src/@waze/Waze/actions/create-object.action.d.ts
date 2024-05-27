@@ -10,7 +10,7 @@ export class CreateObjectAction<
   repository: any;
   attributes: DM extends DataModel<infer U> ? U : never;
 
-  constructor(object: DM, repository: any, attributes?: any, props?: any);
+  constructor(object: DM, repository: any, options?: any);
 
   getObject(): DM;
   getAttributes(): typeof this.attributes;
