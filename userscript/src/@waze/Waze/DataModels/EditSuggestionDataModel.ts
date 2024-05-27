@@ -2,12 +2,12 @@ import {
   DataModel,
   DataModelAttributes,
 } from '@/@waze/Waze/DataModels/DataModel';
-import { Geometry } from '@turf/helpers';
+import { Geometry, GeometryObject } from '@turf/helpers';
 
 export interface EditSuggestionTransaction {
   actionType: 'ADD' | 'UPDATE' | 'DELETE' | string;
   attributes: any;
-  geometry: Geometry;
+  geometry: GeometryObject;
   groupId: number;
   id: string;
   objectId: number | string;
