@@ -103,6 +103,7 @@ export function useEditSuggestionClaim(suggestion: EditSuggestionDataModel) {
   const { claimSuggestion, handledSuggestions } =
     useHandledEditSuggestionsContext();
   const currentSuggestionClaims = useMemo(() => {
+    if (!suggestion) return [];
     const currentSuggestionId = suggestion.getAttribute('id');
     return handledSuggestions.filter(
       (claim) => claim.editSuggestionId === currentSuggestionId,
@@ -116,7 +117,9 @@ export function useEditSuggestionClaim(suggestion: EditSuggestionDataModel) {
         claim.handledBy ===
         getWazeMapEditorWindow().W.loginManager.user.getAttribute('id'),
     ),
-    handledBy: handledSuggestions.map((claim) => claim.handledBy),
+    handledBy: Array.from(
+      new Set(handledSuggestions.map((claim) => claim.handledBy)).values(),
+    ),
     handledOn: Math.max(...handledSuggestions.map((claim) => claim.handledOn)),
     claim: () => claimSuggestion(suggestion),
     async unClaim() {

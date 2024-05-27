@@ -1,6 +1,16 @@
 {
   "sa": {
+    "issue_tracker": {
+      "issue": {
+        "status": {
+          "handled": "In Review"
+        }
+      }
+    },
     "issues_tracker": {
+      "EDIT_SUGGESTION": {
+        "handled_on": "Handled on %{date}"
+      },
       "labels": {
         "mark_handled": "Mark as handled",
         "mark_unhandled": "Mark as unhandled"

@@ -3,6 +3,7 @@ import type Config from './Config';
 import UserScripts from './UserScripts';
 
 export default interface Waze {
+  WMPChatService: any;
   Config: Config;
   Rule(): any; // todo inspect this function
   accelerators: Accelerators;
