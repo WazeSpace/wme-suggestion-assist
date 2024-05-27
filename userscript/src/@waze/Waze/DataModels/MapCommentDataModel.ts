@@ -1,7 +1,11 @@
-import { DataModel, DataModelAttributes } from '@/@waze/Waze/DataModels/DataModel';
-import { Point, Polygon } from '@turf/helpers';
+import {
+  DataModel,
+  DataModelAttributes,
+} from '@/@waze/Waze/DataModels/DataModel';
+import { Geometry, Point, Polygon } from '@turf/helpers';
 
 export interface MapCommentDataModelAttributes extends DataModelAttributes {
+  geoJSONGeometry: Geometry;
   subject: string;
   body: string;
   conversation: unknown[];
@@ -11,7 +15,8 @@ export interface MapCommentDataModelAttributes extends DataModelAttributes {
   oldId: string;
 }
 
-export interface MapCommentDataModel extends DataModel<MapCommentDataModelAttributes> {
+export interface MapCommentDataModel
+  extends DataModel<MapCommentDataModelAttributes> {
   isPoint(): boolean;
   getPolygonGeometry(): Polygon;
   getPointGeometry(): Point;

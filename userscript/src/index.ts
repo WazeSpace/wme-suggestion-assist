@@ -1,4 +1,5 @@
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
+import './polyfills/date-manipulation';
 
 function waitForEvent<N extends Node>(
   node: N,
