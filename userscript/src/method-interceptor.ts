@@ -102,6 +102,10 @@ export class BeforeMethodInvocationInterceptor<
     Parameters<FunctionFromObject<O, FK>>,
     | ReturnType<FunctionFromObject<O, FK>>
     | typeof BeforeMethodInvocationInterceptor.CONTINUE_EXECUTION
+    | [
+        typeof BeforeMethodInvocationInterceptor.CONTINUE_EXECUTION,
+        ...Parameters<FunctionFromObject<O, FK>>,
+      ]
   >
 > {
   static readonly CONTINUE_EXECUTION = Symbol(
@@ -124,14 +128,39 @@ export class BeforeMethodInvocationInterceptor<
     return symbol === BeforeMethodInvocationInterceptor.CONTINUE_EXECUTION;
   }
 
+  private static _isModifiedArgsReturnValue<
+    O extends object,
+    FK extends keyof O,
+  >(
+    returnValue: any,
+  ): returnValue is [
+    typeof BeforeMethodInvocationInterceptor.CONTINUE_EXECUTION,
+    ...Parameters<FunctionFromObject<O, FK>>,
+  ] {
+    if (!Array.isArray(returnValue)) return false;
+    return this._isContinueExecutionSymbol(returnValue[0]);
+  }
+
   protected _interceptCb(
     ...args: Parameters<FunctionFromObject<O, FK>>
   ): ReturnType<FunctionFromObject<O, FK>> {
     const returnValue = this._executeInterceptionFn(...args);
     if (
+      !BeforeMethodInvocationInterceptor._isModifiedArgsReturnValue<O, FK>(
+        returnValue,
+      ) &&
       !BeforeMethodInvocationInterceptor._isContinueExecutionSymbol(returnValue)
     ) {
       return returnValue;
+    }
+
+    if (
+      BeforeMethodInvocationInterceptor._isModifiedArgsReturnValue<O, FK>(
+        returnValue,
+      )
+    ) {
+      const [, ...modifiedArgs] = returnValue;
+      return this._executeOriginalFn(...modifiedArgs);
     }
 
     return this._executeOriginalFn(...args);
