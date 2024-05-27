@@ -6,16 +6,18 @@ interface UtilityButtonProps {
   iconName: string;
   label: string;
   onClick(event: SyntheticEvent): void;
+  isBusy?: boolean;
 }
 export function UtilityButton({
   iconName,
   label,
   onClick,
+  isBusy = false,
 }: UtilityButtonProps) {
   return (
     <wz-basic-tooltip>
       <wz-tooltip-source>
-        <WzButton size="sm" color="clear-icon" onClick={onClick}>
+        <WzButton busy={isBusy} size="sm" color="clear-icon" onClick={onClick}>
           <i className={clsx('w-icon', `w-icon-${iconName}`)} />
         </WzButton>
       </wz-tooltip-source>

@@ -1,17 +1,17 @@
-import { MarkAsClaimedUtilityButton } from '@/global/edit-suggestion-panel/components';
-import { useShownEditSuggestion } from '@/global/edit-suggestion-panel/hooks';
-import { UtilityButtonsRowPortal } from '@/global/edit-suggestion-panel/portals';
+import { MarkAsClaimedUtilityButton } from './components';
+import { useShownEditSuggestion } from './hooks';
+import { UtilityButtonsRowPortal } from './portals';
 import { ReactElement } from 'react';
 
 export function EditSuggestionPanelEnhancer(): ReactElement {
-  const { editSuggestionPanel } = useShownEditSuggestion();
+  const { editSuggestionPanel, editSuggestion } = useShownEditSuggestion();
 
-  if (!editSuggestionPanel) return null;
+  if (!editSuggestionPanel || !editSuggestion) return null;
 
   return (
     <>
       <UtilityButtonsRowPortal>
-        <MarkAsClaimedUtilityButton />
+        <MarkAsClaimedUtilityButton editSuggestion={editSuggestion} />
       </UtilityButtonsRowPortal>
     </>
   );

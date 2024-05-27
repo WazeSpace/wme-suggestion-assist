@@ -1,4 +1,5 @@
 import { EditSuggestionPanelEnhancer } from '@/global';
+import { ClaimedEditSuggestionsProvider } from '@/global/contexts';
 import { useInjectTranslations } from '@/hooks';
 import { LanguageTranslations } from '@/@waze/I18n';
 import { getWazeMapEditorWindow } from '@/utils';
@@ -14,5 +15,9 @@ export function App(props: AppProps): ReactElement {
     props.translations ?? { [currentLocale]: staticUserscriptTranslations },
   );
 
-  return <EditSuggestionPanelEnhancer />;
+  return (
+    <ClaimedEditSuggestionsProvider>
+      <EditSuggestionPanelEnhancer />
+    </ClaimedEditSuggestionsProvider>
+  );
 }

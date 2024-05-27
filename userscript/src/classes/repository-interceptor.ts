@@ -11,15 +11,18 @@ export class RepositoryInterceptor<T extends DataModel = DataModel> {
   private readonly _objectType: string;
   private _interceptors: MethodInterceptor<any, any, any>[];
   private readonly _shouldAddObject: ShouldAddObject<T>;
+  private readonly _handleClear: () => void;
 
   constructor(
     dataModel: any,
     objectType: string,
     shouldAddObject: ShouldAddObject<T>,
+    handleClear: () => void,
   ) {
     this._dataModel = dataModel;
     this._objectType = objectType;
     this._shouldAddObject = shouldAddObject;
+    this._handleClear = handleClear;
     this._createRepositoryInterceptors();
   }
 
@@ -76,6 +79,10 @@ export class RepositoryInterceptor<T extends DataModel = DataModel> {
           ];
         },
       ),
+      new BeforeMethodInvocationInterceptor(repository, 'clear', () => {
+        this._handleClear();
+        return BeforeMethodInvocationInterceptor.CONTINUE_EXECUTION;
+      }),
     ];
   }
 
