@@ -60,9 +60,13 @@ function getUserRankContent(rank: number): number {
   }
 }
 
-function getEditorProfileUrl(username: string) {
-  return new URL(
-    `/user/editor/${encodeURIComponent(username)}`,
-    location.origin,
-  ).toString();
+function getEditorProfileUrl(username: string): string {
+  const encodedUsername = encodeURIComponent(username);
+  const userProfileConfig = getWazeMapEditorWindow().W.Config.user_profile;
+  if ('url' in userProfileConfig) {
+    const baseUrl = userProfileConfig.url;
+    return baseUrl + encodedUsername;
+  }
+
+  return new URL(`/user/editor/${encodedUsername}`, location.origin).toString();
 }
