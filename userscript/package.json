@@ -2,7 +2,7 @@
   "name": "@wazespace/wme-suggestion-assist",
   "fullDisplayName": "WME Suggestion Assist",
   "displayName": "Suggestion Assist",
-  "version": "1.0.0-beta",
+  "version": "1.0.0",
   "description": "Visualize handled \"Suggestion Edits\" in Waze Map Editor",
   "main": "index.js",
   "scripts": {

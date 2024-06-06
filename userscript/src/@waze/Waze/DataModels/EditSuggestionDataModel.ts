@@ -2,17 +2,31 @@ import {
   DataModel,
   DataModelAttributes,
 } from '@/@waze/Waze/DataModels/DataModel';
-import { Geometry, GeometryObject } from '@turf/helpers';
+import { GeometryObject } from '@turf/helpers';
 
-export interface EditSuggestionTransaction {
+export interface EditSuggestionEntityEdit {
   actionType: 'ADD' | 'UPDATE' | 'DELETE' | string;
   attributes: any;
   geometry: GeometryObject;
-  groupId: number;
-  id: string;
   objectId: number | string;
   objectType: string;
+}
+export interface EditSuggestionTransaction extends EditSuggestionEntityEdit {
+  groupId: number;
+  id: string;
   transactionId: string;
+}
+
+export interface EditSuggestion {
+  entityEdits: EditSuggestionEntityEdit[];
+  id: string;
+  permissions: unknown;
+  status: unknown;
+
+  getEntityEdits(): EditSuggestionEntityEdit[];
+  getID(): string;
+  getPermissions(): unknown;
+  getStatus(): unknown;
 }
 
 export interface EditSuggestionDataModelAttributes extends DataModelAttributes {
@@ -26,7 +40,7 @@ export interface EditSuggestionDataModelAttributes extends DataModelAttributes {
   rejectionReason: string;
   source: 'WME' | string;
   status: 'OPEN' | 'CLOSED' | string;
-  suggestions: Array<EditSuggestionTransaction>;
+  suggestions: Array<EditSuggestionTransaction> | Array<EditSuggestion>;
 }
 
 export interface EditSuggestionDataModel

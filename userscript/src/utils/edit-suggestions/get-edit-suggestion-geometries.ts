@@ -1,5 +1,7 @@
 import {
+  EditSuggestion,
   EditSuggestionDataModel,
+  EditSuggestionEntityEdit,
   EditSuggestionTransaction,
 } from '@/@waze/Waze/DataModels/EditSuggestionDataModel';
 import { uniqBy } from '@/utils';
@@ -21,12 +23,21 @@ function getSuggestionBufferedPolygon(
   }
 }
 
+function isSuggestionTransactionArray(
+  array: EditSuggestionEntityEdit[] | EditSuggestion[],
+): array is EditSuggestionTransaction[] {
+  return array.every((item) => 'transactionId' in item);
+}
+
 export function getEditSuggestionBufferedGeometries(
   editSuggestion: EditSuggestionDataModel,
 ): Geometry[] {
   const suggestions = editSuggestion.getSuggestions();
+  const editEntities = isSuggestionTransactionArray(suggestions)
+    ? suggestions
+    : suggestions.flatMap((suggestion) => suggestion.getEntityEdits());
   const uniqueObjectSuggestions = uniqBy(
-    suggestions,
+    editEntities,
     (transaction) => `${transaction.objectType}${transaction.objectId}`,
   );
   return uniqueObjectSuggestions
