@@ -49,4 +49,5 @@ export type WazeMapEditorWindow = Window & {
   ) => any;
   React: typeof import('react');
   ReactDOM: typeof import('react-dom');
+  getWmeSdk: (options: { scriptId: string; version?: string }) => any;
 };

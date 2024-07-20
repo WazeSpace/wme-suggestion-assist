@@ -1,9 +1,10 @@
+import { WmeSdkContext } from '@/contexts/WmeSdkContext';
 import { EditSuggestionPanelEnhancer } from '@/global';
 import { HandledEditSuggestionsProvider } from '@/global/contexts';
 import { useInjectTranslations } from '@/hooks';
 import { LanguageTranslations } from '@/@waze/I18n';
 import { getWazeMapEditorWindow } from '@/utils';
-import { ReactElement } from 'react';
+import { ReactElement, useMemo } from 'react';
 import staticUserscriptTranslations from './localization/static/userscript.json';
 
 interface AppProps {
@@ -14,10 +15,19 @@ export function App(props: AppProps): ReactElement {
   useInjectTranslations(
     props.translations ?? { [currentLocale]: staticUserscriptTranslations },
   );
+  const wmeSdk = useMemo(() => {
+    const window = getWazeMapEditorWindow();
+    if (!('getWmeSdk' in window)) return null;
+    return window.getWmeSdk({
+      scriptId: process.env.SCRIPT_ID,
+    });
+  }, []);
 
   return (
-    <HandledEditSuggestionsProvider>
-      <EditSuggestionPanelEnhancer />
-    </HandledEditSuggestionsProvider>
+    <WmeSdkContext.Provider value={wmeSdk}>
+      <HandledEditSuggestionsProvider>
+        <EditSuggestionPanelEnhancer />
+      </HandledEditSuggestionsProvider>
+    </WmeSdkContext.Provider>
   );
 }
