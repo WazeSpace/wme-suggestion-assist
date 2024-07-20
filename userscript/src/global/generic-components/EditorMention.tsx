@@ -1,13 +1,17 @@
 import { ExternalUserDataModel } from '@/@waze/Waze/DataModels/ExternalUserDataModel';
+import { WmeSdkContext } from '@/contexts/WmeSdkContext';
 import { StartChatButton } from '@/global/generic-components/StartChatButton';
+import { Logger } from '@/logger';
 import { getWazeMapEditorWindow } from '@/utils';
 import { WzAnchor } from '@wazespace/wme-react-components';
+import { useContext } from 'react';
 
 interface EditorMentionProps {
   userId: number;
   chatContext?: any;
 }
 export function EditorMention({ userId, chatContext }: EditorMentionProps) {
+  const wmeSdk = useContext(WmeSdkContext);
   const dataModel = getWazeMapEditorWindow().W.model;
   const user: ExternalUserDataModel = dataModel.users.getObjectById(userId);
   if (!user) return <>{userId}</>;
@@ -15,7 +19,7 @@ export function EditorMention({ userId, chatContext }: EditorMentionProps) {
   return (
     <>
       <WzAnchor
-        href={getEditorProfileUrl(user.getAttribute('userName'))}
+        href={getEditorProfileUrl(user.getAttribute('userName'), wmeSdk)}
         target="_blank"
         rel="noopener noreferrer"
         withIcon={false}
@@ -60,7 +64,15 @@ function getUserRankContent(rank: number): number {
   }
 }
 
-function getEditorProfileUrl(username: string): string {
+function getEditorProfileUrl(username: string, wmeSdk?: any): string {
+  if (wmeSdk) {
+    Logger.log('getEditorProfileUrl engine: SDK');
+    return wmeSdk.DataModel.Users.getUserProfileLink({
+      userName: username,
+    });
+  }
+
+  Logger.log('getEditorProfileUrl engine: self');
   const encodedUsername = encodeURIComponent(username);
   const userProfileConfig = getWazeMapEditorWindow().W.Config.user_profile;
   if ('url' in userProfileConfig) {
