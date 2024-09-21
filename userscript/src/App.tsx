@@ -6,6 +6,7 @@ import { LanguageTranslations } from '@/@waze/I18n';
 import { getWazeMapEditorWindow } from '@/utils';
 import { ReactElement, useMemo } from 'react';
 import staticUserscriptTranslations from './localization/static/userscript.json';
+import { WmeSDK } from 'wme-sdk-typings';
 
 interface AppProps {
   translations: LanguageTranslations | null;
@@ -15,11 +16,12 @@ export function App(props: AppProps): ReactElement {
   useInjectTranslations(
     props.translations ?? { [currentLocale]: staticUserscriptTranslations },
   );
-  const wmeSdk = useMemo(() => {
+  const wmeSdk: WmeSDK = useMemo(() => {
     const window = getWazeMapEditorWindow();
     if (!('getWmeSdk' in window)) return null;
     return window.getWmeSdk({
       scriptId: process.env.SCRIPT_ID,
+      scriptName: process.env.SCRIPT_NAME,
     });
   }, []);
 

@@ -40,7 +40,8 @@
     "typescript": "^5.4.2",
     "webpack": "^5.90.3",
     "webpack-cli": "^5.1.4",
-    "webpack-userscript": "^3.2.2"
+    "webpack-userscript": "^3.2.2",
+    "wme-sdk-typings": "https://web-assets.waze.com/wme_sdk_docs/beta/latest/wme-sdk-typings.tgz"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",

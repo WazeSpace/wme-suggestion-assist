@@ -5,6 +5,7 @@ import { Logger } from '@/logger';
 import { getWazeMapEditorWindow } from '@/utils';
 import { WzAnchor } from '@wazespace/wme-react-components';
 import { useContext } from 'react';
+import { WmeSDK } from 'wme-sdk-typings';
 
 interface EditorMentionProps {
   userId: number;
@@ -64,7 +65,7 @@ function getUserRankContent(rank: number): number {
   }
 }
 
-function getEditorProfileUrl(username: string, wmeSdk?: any): string {
+function getEditorProfileUrl(username: string, wmeSdk?: WmeSDK): string {
   if (wmeSdk) {
     Logger.log('getEditorProfileUrl engine: SDK');
     return wmeSdk.DataModel.Users.getUserProfileLink({

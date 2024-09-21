@@ -5,3 +5,4 @@ export { createMandatoryUseContext } from './create-mandatory-use-context';
 export { createReactPortal } from './create-react-portal';
 export { getWazeMapEditorWindow } from './get-wme-window';
 export { uniqBy } from './uniq-by';
+export { getVersionDependantConfig } from './version-dependant-config';
