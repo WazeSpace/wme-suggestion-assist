@@ -1,3 +1,4 @@
+import { useShownEditSuggestionContext } from '@/global/contexts/ShownEditSuggestionContext';
 import { EditorMention } from '@/global/generic-components';
 import { useTranslate } from '@/hooks';
 import { getWazeMapEditorWindow } from '@/utils';
@@ -10,10 +11,11 @@ interface HandledBannerProps {
 }
 export function HandledBanner({ handledOn, handledBy }: HandledBannerProps) {
   const t = useTranslate();
+  const { editSuggestionPanel } = useShownEditSuggestionContext();
 
   useEffect(() => {
-    const originalBanner = document.querySelector<HTMLDivElement>(
-      '.edit-suggestion-panel .header-container + wz-banner',
+    const originalBanner = editSuggestionPanel?.querySelector<HTMLDivElement>(
+      'div[class^=headerContainer] + wz-banner',
     );
     if (originalBanner) originalBanner.style.display = 'none';
 
