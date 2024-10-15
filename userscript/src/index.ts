@@ -1,6 +1,5 @@
 import { getWazeMapEditorWindow } from '@/utils/get-wme-window';
 import './polyfills/date-manipulation';
-import 'wme-sdk-typings';
 
 function waitForEvent<N extends Node>(
   node: N,
