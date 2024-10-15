@@ -7,6 +7,7 @@ import { getWazeMapEditorWindow } from '@/utils';
 import { ReactElement, useMemo } from 'react';
 import staticUserscriptTranslations from './localization/static/userscript.json';
 import { WmeSDK } from 'wme-sdk-typings';
+import { ShownEditSuggestionContextProvider } from './global/contexts/ShownEditSuggestionContext';
 
 interface AppProps {
   translations: LanguageTranslations | null;
@@ -28,7 +29,9 @@ export function App(props: AppProps): ReactElement {
   return (
     <WmeSdkContext.Provider value={wmeSdk}>
       <HandledEditSuggestionsProvider>
-        <EditSuggestionPanelEnhancer />
+        <ShownEditSuggestionContextProvider>
+          <EditSuggestionPanelEnhancer />
+        </ShownEditSuggestionContextProvider>
       </HandledEditSuggestionsProvider>
     </WmeSdkContext.Provider>
   );
