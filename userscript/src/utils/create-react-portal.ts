@@ -10,6 +10,13 @@ export function createReactPortal(
 ): ComponentType<PortalProps> {
   return ({ children, portalKey }: PortalProps) => {
     const container = useMemo(() => getContainer(), []);
+    if (!container) {
+      console.error(
+        '[Suggestion Assist] Unable to get container using function',
+        getContainer,
+      );
+      return null;
+    }
     return createPortal(children, container, portalKey);
   };
 }
